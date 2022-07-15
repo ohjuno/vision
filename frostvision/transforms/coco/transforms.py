@@ -1,11 +1,12 @@
-import random
 from typing import Sequence
 
+import random
 import torch
-from torch.nn import Module
 
 import torchvision.transforms as T
 import frostvision.transforms.coco.functional as F
+
+from torch.nn import Module
 
 
 class Broadcast:
