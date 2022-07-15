@@ -15,14 +15,12 @@ def main():
         transforms.Normalize(mean=(0.485, 0.456, 0.406), std=(0.229, 0.224, 0.225)),
     ])
     trainset = COCODetection(root, annFile, transforms_coco)
-    trainloader = DataLoader(trainset, 4, True, num_workers=0, collate_fn=utils.collation.coco_collate_fn)
-
+    trainloader = DataLoader(trainset, 8, True, num_workers=0, collate_fn=utils.collation.coco_collate_fn)
     denorm = transforms.Broadcast([transforms.Denormalize(mean=(0.485, 0.456, 0.406), std=(0.229, 0.224, 0.225))])
 
-    inputs, targets = next(iter(trainloader))
-    inputs, targets = denorm((inputs, targets))
-    utils.visualize.visualize_bounding_boxes_on_batch((inputs, targets))
-
+    batch = next(iter(trainloader))
+    batch = denorm(batch)
+    utils.visualize.visualize_bounding_boxes_on_batch(batch)
 
 if __name__ == '__main__':
     main()
