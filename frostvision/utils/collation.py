@@ -5,10 +5,11 @@ __all__ = ['coco_collate_fn']
 
 
 def _make_spatial_shape_to_square(tensor_shapes):
-    shape = tensor_shapes[0]
-    long = max(shape)
-    shape = [shape[0], long, long]
-    return shape
+    max_shape = tensor_shapes[0]
+    for shape in tensor_shapes[1:]:
+        for idx, item in enumerate(shape):
+            max_shape[idx] = max(max_shape[idx], item)
+    return max_shape
 
 
 def _align_spatial_shape_with_paddings(tensors):
